@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="js/bootstrap.min.js"></script>
+
+    <title>SMart history select</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js"></script>
+  </head>
+
+<body>
+
+    <!-- 如果時間選擇錯誤-->
+    {% if datestart_sql > dateend_sql %}
+    <script>
+            Swal.fire({
+                icon: "error",
+                title: "沒有可顯示資料",
+                text: "起始時間要小於結束時間唷!",
+            })
+    </script>
+    {% endif %}
+
+<center>
+
+    <header>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="/" class="navbar-brand d-flex align-items-center">
+            <img src="./static/smart.jpg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="12" cy="13" r="4"></circle></img>
+            <strong>SMart</strong>
+          </a>
+        </div>
+      </div>
+    </header>
+
+
+
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">SMart智慧商店</h1>
+          <p class="lead text-muted">Simple, Marvelous, Amusing, Realistic, Timesaving</p>
+          <p>
+          </p>
+        </div>
+      </section>
+
+
+        <h3><b>查詢結果:</b></h3>
+        <font color="red">總共{{data_count}}筆資料</font>
+            <br>
+            <br>
+        <iframe src="http://104.199.235.246:5601/app/kibana#/dashboard/ff8608f0-c4cf-11ea-8553-55277fa2a95e?embed=true&_g=(refreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3A'{{datestart_k}}.000Z'%2Cto%3A'{{dateend_k}}.000Z'))" height="960" width="90%"></iframe>
+            <br>
+            <br>
+            <a href="./static/{{csv_name}}.csv" download="{{csv_name}}.csv">
+            <button class="btn btn-primary"><h6>下載完整csv檔</h6></button>
+            </a>
+
+            <br>
+            <br>
+
+        {% if data_count != 0 %}
+            {% for table in tables %}
+                {{ table|safe }}
+            {% endfor %}
+        {% endif %}
+
+    </main>
+    <footer class="text-muted">
+      <div class="container">
+        <p>© SMart Team Company 2020</p>
+      </div>
+    </footer>
+
+</center>
+</body>
+</html>
